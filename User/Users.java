@@ -139,10 +139,18 @@ public class Users {
         int id = scanner.nextInt();
 
         if(id > 0 && id <= users.size()) {
-            users.remove(id - 1);
-            System.out.println(System.lineSeparator().repeat(50));
-            System.out.println("Utilizatorul a fost sters cu succes!");
-            return ;
+            UserWithRole user = users.get(id);
+
+            if(!user.isAdmin()) {
+                users.remove(id - 1);
+                System.out.println(System.lineSeparator().repeat(50));
+                System.out.println("Utilizatorul a fost sters cu succes!");
+                return;
+            }
+            else {
+                System.out.print("Accesul interzis! Utilizatorul este admin!");
+                return;
+            }
         }
 
         System.out.println(System.lineSeparator().repeat(50));

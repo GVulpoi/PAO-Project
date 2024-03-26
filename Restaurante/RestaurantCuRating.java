@@ -5,7 +5,7 @@ public class RestaurantCuRating extends Restaurant {
 
     public RestaurantCuRating(float auxRating, Restaurant auxRestaurant) {
         rating = auxRating;
-        this.nume = auxRestaurant.getNume();
-        this.localizare = auxRestaurant.getLocalizare();
+        this.setNume(auxRestaurant.getNume());
+        this.setLocalizare(auxRestaurant.getLocalizare());
     }
 }

@@ -1,43 +1,37 @@
 package Meniu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ingrediente {
-    private String[] nume;
+    private List<String> ingrediente;
 
     public Ingrediente() {
+        ingrediente = new ArrayList<>();
     }
 
-    public void setNume(String[] nume) {
-        this.nume = nume;
-    }
-
-    public String[] getNume() {
-        return nume;
-    }
-    public Ingrediente(String[] auxNume) {
-        nume = new String[auxNume.length];
-        for(int i = 0; i < auxNume.length; i++) {
-            nume[i] = auxNume[i];
+    public Ingrediente(String[] auxingrediente) {
+        ingrediente = new ArrayList<>();
+        for (String num : auxingrediente) {
+            ingrediente.add(num);
         }
+    }
+
+    public void setIngrediente(List<String> ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    public List<String> getIngrediente() {
+        return ingrediente;
     }
 
     public void addIngredient(String ingredient) {
-        String[] auxNume = new String[nume.length + 1];
-        for(int i = 0; i < nume.length; i++) {
-            auxNume[i] = nume[i];
-        }
-
-        auxNume[nume.length] = ingredient;
-
-        nume = new String[auxNume.length];
-        for(int i = 0; i < auxNume.length; i++) {
-            nume[i] = auxNume[i];
-        }
+        ingrediente.add(ingredient);
     }
 
     public void showIngrediente() {
-        for (String aux : nume) {
-            System.out.print("-");
-            System.out.println(aux);
+        for (String aux : ingrediente) {
+            System.out.println("-" + aux);
         }
     }
 }

@@ -11,4 +11,8 @@ public class Preparat extends Ingrediente{
         nume = auxNume;
         durata = auxDurata;
     }
+
+    public String getNume() {
+        return nume;
+    }
 }
