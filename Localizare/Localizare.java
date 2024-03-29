@@ -1,5 +1,7 @@
 package Localizare;
 
+import java.util.List;
+
 public class Localizare {
     private String oras;
     private String strada;

@@ -40,11 +40,18 @@ public class Restaurante {
         }
     }
 
-    public void showRestauranteLoc(Localizare auxLocalizare) {
-        int k = 1;
+    public Restaurant getRestauranteLoc(Localizare auxLocalizare) {
         for (Restaurant auxRestaurant : restaurante) {
-            ////
+            if(auxRestaurant.getLocalizare().getOras().equals(auxLocalizare.getOras()) && auxRestaurant.getLocalizare().getStrada().equals(auxLocalizare.getStrada()) && auxRestaurant.getLocalizare().getNr() == auxLocalizare.getNr() ) {
+                return auxRestaurant;
+            }
         }
+        return null;
+    }
+
+    public void showRestaurant(Restaurant auxRestaurant) {
+        System.out.print("1) ");
+        System.out.println(auxRestaurant.getNume());
     }
 
     public List<Restaurant> getRestaurante() {

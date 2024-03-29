@@ -42,7 +42,7 @@ public class Main {
         Restaurant tavRac = new Restaurant("Taverna Racilor", new Localizare("Bucuresti", "Herastrau park", 28), new Meniu(new HashSet<>(Arrays.asList(pr1, pr2, pr3))));
         Restaurant story = new Restaurant("Story Wine and Music", new Localizare("Targoviste", "Centrul vechi", 17), new Meniu(new HashSet<>(Arrays.asList(pr3, pr2, pr5, pr6))));
         Restaurant vacamuuu = new Restaurant("Vacamuuu", new Localizare("Bucuresti", "Calea floreasca", 111), new Meniu(new HashSet<>(Arrays.asList(pr3, pr8, pr5, pr9, pr7))));
-        Restaurant pescLuiMatei = new Restaurant("Pescaria Lui Matei", new Localizare("Bucuresti", "Calea floreasca", 111), new Meniu(new HashSet<>(Arrays.asList(pr3, pr10, pr4, pr6))));
+        Restaurant pescLuiMatei = new Restaurant("Pescaria Lui Matei", new Localizare("Constanta", "Strada meduzei", 13), new Meniu(new HashSet<>(Arrays.asList(pr3, pr10, pr4, pr6))));
 
         Restaurante restaurante = new Restaurante();
         restaurante.addRestaurant(tavRac);
@@ -252,7 +252,7 @@ public class Main {
         }
     }
 
-    public static void part22(Users users, Restaurante restaurante, List<Localizare> localizari) {
+    public static void part22(Users users, Restaurante restaurante, List<Localizare> localizari) throws InterruptedException {
         int k = 1;
         for(Localizare auxLoc : localizari) {
             System.out.print(k);
@@ -262,6 +262,7 @@ public class Main {
             System.out.print(auxLoc.getStrada());
             System.out.print("\t Nr. : ");
             System.out.println(auxLoc.getNr());
+            k += 1;
         }
         System.out.println("Introduceti locatia :");
 
@@ -271,7 +272,13 @@ public class Main {
 
         if(id > 0 && id <= localizari.size()) {
             Localizare localizare = localizari.get(id - 1);
+            Restaurant restaurant = restaurante.getRestauranteLoc(localizare);
 
+            System.out.println(System.lineSeparator().repeat(50));
+            System.out.print("Ati selectat restaurantul ");
+            System.out.print(restaurant.getNume());
+            System.out.println("!");
+            part3(users, restaurante, restaurant, localizari);
         }
         else {
             System.out.println(System.lineSeparator().repeat(50));
@@ -347,6 +354,5 @@ public class Main {
         Thread.sleep(random.nextInt(5)*1000 + 5000);
         System.out.println(System.lineSeparator().repeat(50));
         System.out.println("Comanda livrata!");
-
     }
 }
