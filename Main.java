@@ -1,14 +1,13 @@
-import Localizare.Localizare;
-import Meniu.Ingrediente;
-import Meniu.Meniu;
-import Meniu.Preparat;
+import Implement.Localizare;
+import Implement.Meniu;
+import Implement.Preparat;
 
-import Restaurante.Restaurant;
-import Restaurante.Restaurante;
-import ShoppingCart.ComandaImpl;
-import User.Users;
-import User.User;
-import User.UserWithRole;
+import Implement.Restaurant;
+import Implement.Restaurante;
+import Implement.ComandaImpl;
+import Implement.Users;
+import Implement.User;
+import Implement.UserWithRole;
 
 import java.util.*;
 
