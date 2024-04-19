@@ -59,6 +59,30 @@ public class Restaurante implements RestauranteService {
         return restaurante;
     }
 
+    public List<Restaurant> cautaRestaurant(String nume) {
+        List<Restaurant> auxRestaurante = new ArrayList<>() ;
+
+        for(int i = 0; i < restaurante.size(); i++) {
+            if (restaurante.get(i).getNume().toLowerCase().contains(nume.toLowerCase()) || restaurante.get(i).getNume().toLowerCase().equals(nume.toLowerCase())) {
+                auxRestaurante.add(restaurante.get(i));
+            }
+        }
+
+        return auxRestaurante;
+    }
+
+    public List<Restaurant> cautaLocatie(String nume) {
+        List<Restaurant> auxRestaurante = new ArrayList<>() ;
+
+        for(int i = 0; i < restaurante.size(); i++) {
+            if (restaurante.get(i).getLocalizare().getOras().toLowerCase().contains(nume.toLowerCase()) || restaurante.get(i).getLocalizare().getOras().toLowerCase().equals(nume.toLowerCase())) {
+                auxRestaurante.add(restaurante.get(i));
+            }
+        }
+
+        return auxRestaurante;
+    }
+
     private void sortRest() {
         restaurante.sort(Comparator.comparing(Restaurant::getNume));
     }

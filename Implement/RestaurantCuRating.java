@@ -4,11 +4,19 @@ import Service.RestaurantCuRatingService;
 
 public class RestaurantCuRating extends Implement.Restaurant implements RestaurantCuRatingService {
 
-    float rating;
+    double rating;
 
-    public RestaurantCuRating(float auxRating, Restaurant auxRestaurant) {
+    public RestaurantCuRating(double auxRating, Restaurant auxRestaurant) {
         rating = auxRating;
         this.setNume(auxRestaurant.getNume());
         this.setLocalizare(auxRestaurant.getLocalizare());
+        this.setMeniu(auxRestaurant.getMeniu());
+    }
+
+    public RestaurantCuRating(Restaurant auxRestaurant) {
+        rating = 0;
+        this.setNume(auxRestaurant.getNume());
+        this.setLocalizare(auxRestaurant.getLocalizare());
+        this.setMeniu(auxRestaurant.getMeniu());
     }
 }

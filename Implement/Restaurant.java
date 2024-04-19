@@ -10,6 +10,9 @@ public class Restaurant implements RestaurantService {
     public Restaurant() {
     }
 
+    public Restaurant(double v, Restaurant restaurant) {
+    }
+
     public Restaurant(String auxNume, Localizare auxLocalizare, Meniu auxMeniu) {
         nume = auxNume;
         localizare = auxLocalizare;

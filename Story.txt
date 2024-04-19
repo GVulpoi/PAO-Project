@@ -2,67 +2,63 @@
 - prin contul de admin doar se pot modifica useri restaurante si locatii
 
 Interfata:
---1
+--1 bifa
 1. Creare user
 2. Login
 3. Creare user admin
 e. Exit
 
---1.1
+--1.1 bifa
 username :
 password :
 
---1.2
+--1.2 bifa
 username :
 password :
 
 --2A
 1. Afisare users
 2. Sterge users
-3. Modifica restaurant
-4. Modifica locatie
 e. Exit
 
---2
+--2 bifa
 1. Afisare restaurante
 2. Afisare locatii
 3. Cauta locatie
 4. Cauta restaurant
 e. Exit
 
---2.1
+--2.1 bifa
 afiseaza restaurantele in ordine alfabetica si se poate selecta restaurantul in functie de ordine (de la 1 la n, ca index i - 1)
 
---2.2
+--2.2 bifa
 afiseaza orasele in ordine alfabetica si se poate selecta un oras, urmand sa se afiseze restaurantele din acelasi oras ca la 2.1
 
---2.3
+--2.3 bifa
 se poate cauta un oras dupa un input si se vor afisa ca la 2.2
 
---2.4
+--2.4 bifa
 se poate cauta un restaurant dupa un input si se va afisa/ se vor afisa ca la 2.1
 
 ! Dupa selectarea unui restaurant:
 
---3
+--3 bifa
 1. Afisare meniu
 2. Afisare descriere
 3. Afisare rating(optional)
 e. Exit
 
---3.1
+--3.1 bifa
 se afiseaza meniul, dupa ce este ales un preparat:
 1. Finalizeaza comanda
 2. Continua comanda (se intoarce la 3.1)
 e. Exit
 
+
 --3.2
 destul de intuitiv
 
---3.3
-la fel de intuitiv
-
---3.1.1
+--3.1.1 bifa
 se va face ceva in tipul apl glovo cu preluare de comanda (random 1-9 sec) dupa, livrare (random 1-9 sec)
 Rating:
 0 ma abtin
