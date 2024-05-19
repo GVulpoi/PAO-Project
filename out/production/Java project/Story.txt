@@ -2,7 +2,7 @@
 - prin contul de admin doar se pot modifica useri restaurante si locatii
 
 Interfata:
---1
+--1 bifa
 1. Creare user
 2. Login
 3. Creare user admin
@@ -19,8 +19,6 @@ password :
 --2A
 1. Afisare users
 2. Sterge users
-3. Modifica restaurant
-4. Modifica locatie
 e. Exit
 
 --2 bifa

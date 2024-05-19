@@ -1,10 +1,13 @@
 import Implement.*;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, SQLException {
         Users users = new Users();
+
+        Database database = Database.getInstance("jdbc:postgresql://localhost:5432/PAO", "postgres", "1234567890");
 
         UserWithRole admin = new UserWithRole("admin", "1234567", true);
         User adita = new UserWithRole("adrian", "1234567", false);
