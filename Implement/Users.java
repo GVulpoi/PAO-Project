@@ -1,8 +1,14 @@
 package Implement;
 
+import Database.Database;
 import Implement.User;
 import Service.UsersService;
 
+import javax.xml.crypto.Data;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,15 +16,22 @@ import java.util.Scanner;
 public class Users implements UsersService {
     private List<UserWithRole> users;
 
-    public Users() {
+    public Users() throws SQLException {
         users = new ArrayList<>();
+        Database db = Database.getInstance();
+        Connection connection = db.connection;
+        Statement st = connection.createStatement();
+        ResultSet resultSet = st.executeQuery("SELECT * FROM USERS;");
+
+        while (resultSet.next()) {
+            users.add(new UserWithRole(resultSet.getString("username"), resultSet.getString("password"), resultSet.getBoolean("is_admin")));
+        }
     }
 
-    public UserWithRole login() {
+    public UserWithRole login() throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Username :");
-
         String username = scanner.nextLine();
 
         for(int i = 0; i < users.size(); i++) {

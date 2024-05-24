@@ -3,10 +3,11 @@ package Service;
 import Implement.User;
 import Implement.UserWithRole;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public interface UsersService {
-    public UserWithRole login();
+    public UserWithRole login() throws SQLException;
 
     public boolean register();
 
