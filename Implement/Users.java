@@ -5,10 +5,7 @@ import Implement.User;
 import Service.UsersService;
 
 import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,9 +16,7 @@ public class Users implements UsersService {
     public Users() throws SQLException {
         users = new ArrayList<>();
         Database db = Database.getInstance();
-        Connection connection = db.connection;
-        Statement st = connection.createStatement();
-        ResultSet resultSet = st.executeQuery("SELECT * FROM USERS;");
+        ResultSet resultSet = db.execQuery("SELECT * FROM USERS;");
 
         while (resultSet.next()) {
             users.add(new UserWithRole(resultSet.getString("username"), resultSet.getString("password"), resultSet.getBoolean("is_admin")));
@@ -57,7 +52,7 @@ public class Users implements UsersService {
         return null;
     }
 
-    public boolean register() {
+    public boolean register() throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Username (Minim 3 caractere) :");
@@ -88,12 +83,15 @@ public class Users implements UsersService {
 
         users.add(new UserWithRole(username, password, false));
 
+        Database database = Database.getInstance();
+        database.execUpdate("INSERT INTO USERS (username, password, is_admin) VALUES ('" + username + "', '" + password + "', false);" );
+
         System.out.println(System.lineSeparator().repeat(50));
         System.out.println("Ati fost inregistrat cu succes !");
         return true;
     }
 
-    public boolean registerAsAdmin() {
+    public boolean registerAsAdmin() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         String secretPassw = "Secpa55";
 
@@ -132,32 +130,97 @@ public class Users implements UsersService {
             return false;
         }
 
-        users.add(new UserWithRole(username, password, false));
-
+        users.add(new UserWithRole(username, password, true));
+        Database database = Database.getInstance();
+        database.execUpdate("INSERT INTO USERS (username, password, is_admin) VALUES ('" + username + "', '" + password + "', true);" );
         System.out.println(System.lineSeparator().repeat(50));
         System.out.println("Ati fost inregistrat cu succes !");
         return true;
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLException {
         UserWithRole userAux = new UserWithRole(user, false);
+        Database database = Database.getInstance();
+        database.execUpdate("INSERT INTO USERS (username, password, is_admin) VALUES ('" + userAux.getUsername() + "', '" + userAux.getPassword() + "', "+ userAux.isAdmin() + ");" );
+
         users.add(userAux);
     }
 
-    public void addUser(UserWithRole user) {
+    public void addUser(UserWithRole user) throws SQLException {
+        Database database = Database.getInstance();
+        database.execUpdate("INSERT INTO USERS (username, password, is_admin) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', "+ user.isAdmin() + ");" );
+
         users.add(user);
     }
 
-    public void deleteUser() {
+    public void modificaUser() throws SQLException {
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduceti numarul utilizatorului dorit :");
 
         int id = scanner.nextInt();
 
         if(id > 0 && id <= users.size()) {
-            UserWithRole user = users.get(id);
+            UserWithRole user = users.get(id - 1);
 
             if(!user.isAdmin()) {
+                System.out.println("1. Schimba username");
+                System.out.println("2. Schimba parola");
+                int opt = scanner.nextInt();
+
+                switch (opt){
+                    case 1: {
+                        System.out.println("Introduceti noul username:");
+                        Scanner scanner1 = new Scanner(System.in);
+                        String username = scanner1.nextLine();
+
+                        Database database = Database.getInstance();
+                        database.execUpdate("UPDATE users " +
+                                "SET username = '" + username + "' " +
+                                "WHERE username IN (SELECT username FROM users WHERE username = '" + user.getUsername() + "');");
+                    }
+                        break;
+                    case 2: {
+                        System.out.println("Introduceti noua parola:");
+                        Scanner scanner1 = new Scanner(System.in);
+                        String parola = scanner1.nextLine();
+
+                        Database database = Database.getInstance();
+                        database.execUpdate("UPDATE users " +
+                                "SET password = '" + parola + "' " +
+                                "WHERE username IN (SELECT username FROM users WHERE password = '" + user.getPassword() + "');");
+                    }
+                        break;
+                    default:
+                        System.out.println("Optiunea introdusa este invalida!");
+                }
+
+                System.out.println(System.lineSeparator().repeat(50));
+                System.out.println("Utilizatorul a fost modificat cu succes!");
+                return;
+            }
+            else {
+                System.out.println("Accesul interzis! Utilizatorul este admin!");
+                return;
+            }
+        }
+
+        System.out.println(System.lineSeparator().repeat(50));
+        System.out.println("Utilizatorul introdus nu exista!");
+    }
+
+    public void deleteUser() throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduceti numarul utilizatorului dorit :");
+
+        int id = scanner.nextInt();
+
+        if(id > 0 && id <= users.size()) {
+            UserWithRole user = users.get(id - 1);
+
+            if(!user.isAdmin()) {
+                Database database = Database.getInstance();
+                database.execUpdate("DELETE FROM users WHERE username = '" + user.getUsername() + "' ;");
                 users.remove(id - 1);
                 System.out.println(System.lineSeparator().repeat(50));
                 System.out.println("Utilizatorul a fost sters cu succes!");

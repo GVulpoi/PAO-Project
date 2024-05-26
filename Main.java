@@ -7,7 +7,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws InterruptedException, SQLException {
         Database database = Database.getInstance();
-        //database.initialization();
+        database.initialization();
 
         Users users = new Users();
 
@@ -118,7 +118,7 @@ public class Main {
         System.out.println("1. Afisare users");
         System.out.println("2. Sterge users");
         System.out.println("3. Modifica restaurant");
-        System.out.println("4. Modifica locatie");
+        System.out.println("4. Modifica user");
         System.out.println("e. Exit");
 
         Scanner scanner = new Scanner(System.in);
@@ -132,13 +132,16 @@ public class Main {
                 part2A2(users, restaurante, localizari, restauranteCuRating);
             }
             else {
-                if (option.equals("e")) {
-                    System.exit(1);
-                } else {
-                    System.out.println(System.lineSeparator().repeat(50));
-                    System.out.println("Wrong input!");
-                    part1(users, restaurante, localizari, restauranteCuRating);
+                if(option.equals("4")) {
+                    part2A4(users, restaurante, localizari, restauranteCuRating);
                 }
+                    if (option.equals("e")) {
+                        System.exit(1);
+                    } else {
+                        System.out.println(System.lineSeparator().repeat(50));
+                        System.out.println("Wrong input!");
+                        part1(users, restaurante, localizari, restauranteCuRating);
+                    }
             }
         }
     }
@@ -151,6 +154,12 @@ public class Main {
     public static void part2A2(Users users, Restaurante restaurante, List<Localizare> localizari, List<RestaurantCuRating> restauranteCuRating) throws InterruptedException, SQLException {
         users.showUsers();
         users.deleteUser();
+        part2A(users, restaurante, localizari, restauranteCuRating);
+    }
+
+    public static void part2A4(Users users, Restaurante restaurante, List<Localizare> localizari, List<RestaurantCuRating> restauranteCuRating) throws SQLException, InterruptedException {
+        users.showUsers();
+        users.modificaUser();
         part2A(users, restaurante, localizari, restauranteCuRating);
     }
 

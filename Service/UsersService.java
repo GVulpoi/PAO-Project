@@ -9,15 +9,17 @@ import java.util.Scanner;
 public interface UsersService {
     public UserWithRole login() throws SQLException;
 
-    public boolean register();
+    public boolean register() throws SQLException;
 
-    public boolean registerAsAdmin();
+    public boolean registerAsAdmin() throws SQLException;
 
-    public void addUser(User user);
+    public void addUser(User user) throws SQLException;
 
-    public void addUser(UserWithRole user);
+    public void addUser(UserWithRole user) throws SQLException;
 
-    public void deleteUser();
+    public void modificaUser() throws SQLException;
+
+    public void deleteUser() throws SQLException;
 
     public void showUsers();
 }
