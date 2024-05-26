@@ -29,9 +29,11 @@ public class Database {
             return ;
         }
 
+        //Secventa pentru cheile primare
         PreparedStatement stmt = connection.prepareStatement("CREATE SEQUENCE seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;");
         stmt.executeUpdate();
 
+        //Crearea tabelului USERS
         stmt = connection.prepareStatement(
                 "CREATE TABLE USERS (" +
                         "id_user INTEGER NOT NULL DEFAULT nextval('seq'), " +
@@ -42,6 +44,11 @@ public class Database {
         );
         stmt.executeUpdate();
 
+        //Inserarea datelor in tabelul users
+        stmt = connection.prepareStatement("INSERT INTO USERS (username, password, is_admin) VALUES ('admin', '1234567', true), ('adrian', '1234567', false);");
+        stmt.executeUpdate();
+
+        //Crearea tabelului PREPARATE
         stmt = connection.prepareStatement(
                 "CREATE TABLE PREPARATE (" +
                         "id_preparat INTEGER NOT NULL DEFAULT nextval('seq'), " +
@@ -51,9 +58,7 @@ public class Database {
         );
         stmt.executeUpdate();
 
-        stmt = connection.prepareStatement("INSERT INTO USERS (username, password, is_admin) VALUES ('admin', '1234567', true), ('adrian', '1234567', false);");
-        stmt.executeUpdate();
-
+        //Crearea tabelului COMENZI
         stmt = connection.prepareStatement(
                 "CREATE TABLE COMENZI (" +
                         "id_comanda INTEGER NOT NULL DEFAULT nextval('seq'), " +
@@ -61,6 +66,7 @@ public class Database {
         );
         stmt.executeUpdate();
 
+        //Crearea tabelului ELEMENTE_COMANDA
         stmt = connection.prepareStatement(
                 "CREATE TABLE ELEMENTE_COMANDA (" +
                         "id_element INTEGER NOT NULL DEFAULT nextval('seq'), " +
@@ -72,6 +78,34 @@ public class Database {
         );
         stmt.executeUpdate();
 
+        //Crearea tabelului MENIURI
+        stmt = connection.prepareStatement(
+                "CREATE TABLE MENIURI (" +
+                        "id_meniu INTEGER NOT NULL DEFAULT nextval('seq'), " +
+                        "nume VARCHAR(20), " +
+                        "PRIMARY KEY (id_meniu));"
+        );
+        stmt.executeUpdate();
+
+        //Inserarea datelor in tabelul MENIURI
+        stmt = connection.prepareStatement("INSERT INTO MENIURI (nume) VALUES ('meniu1'), ('meniu2'), ('meniu3'), ('meniu4');");
+        stmt.executeUpdate();
+
+        //Crearea tabelului ELEMENTE_MENIURI
+        stmt = connection.prepareStatement(
+                "CREATE TABLE ELEMENTE_MENIURI (" +
+                        "id_element_meniu INTEGER NOT NULL DEFAULT nextval('seq'), " +
+                        "id_meniu INTEGER, " +
+                        "id_preparat INTEGER, " +
+                        "FOREIGN KEY (id_meniu) REFERENCES MENIURI (id_meniu), " +
+                        "FOREIGN KEY (id_preparat) REFERENCES PREPARATE (id_preparat), " +
+                        "PRIMARY KEY (id_element_meniu));"
+        );
+        stmt.executeUpdate();
+
+
+
+        //Crearea tabelului INGREDIENTE
         stmt = connection.prepareStatement(
                 "CREATE TABLE INGREDIENTE (" +
                         "id_ingredient INTEGER NOT NULL DEFAULT nextval('seq'), " +
@@ -80,6 +114,7 @@ public class Database {
         );
         stmt.executeUpdate();
 
+        //Inserarea datelor in tabelul INGREDIENTE
         {
 
             String[][] ingrediente = {
@@ -103,6 +138,7 @@ public class Database {
             }
         }
 
+        //Inserarea datelor in tabelul PREPARATE
         {
             String[] statements = {"INSERT INTO PREPARATE (nume, durata) VALUES ('Tocana de Ardei', 130);",
                     "INSERT INTO PREPARATE (nume, durata) VALUES ('Supa de pui', 200);",
@@ -121,6 +157,7 @@ public class Database {
             }
         }
 
+        //Crearea tabelului ELEMENTE_PREPARATE + Inserarea datelor in tabelul ELEMENTE_PREPARATE
         {
             stmt = connection.prepareStatement(
                     "CREATE TABLE ELEMENTE_PREPARATE (" +
@@ -151,18 +188,21 @@ public class Database {
 
             int i = 0;
             while (resultSet.next()) {
-                    for(String ingredient : ingrediente[i]) {
-                        st = connection.createStatement();
-                        ResultSet resultSet2 = st.executeQuery("SELECT id_ingredient FROM INGREDIENTE WHERE nume = '" + ingredient + "';");
-                        resultSet2.next();
+                for(String ingredient : ingrediente[i]) {
+                    st = connection.createStatement();
+                    ResultSet resultSet2 = st.executeQuery("SELECT id_ingredient FROM INGREDIENTE WHERE nume = '" + ingredient + "';");
+                    resultSet2.next();
 
-                        stmt = connection.prepareStatement("INSERT INTO ELEMENTE_PREPARATE (id_preparat, id_ingredient) VALUES (" + resultSet.getString("id_preparat") + ", " + resultSet2.getString("id_ingredient") + ");");
-                        stmt.executeUpdate();
+                    stmt = connection.prepareStatement("INSERT INTO ELEMENTE_PREPARATE (id_preparat, id_ingredient) VALUES (" + resultSet.getString("id_preparat") + ", " + resultSet2.getString("id_ingredient") + ");");
+                    stmt.executeUpdate();
                 }
-                    i++;
+                i++;
             }
         }
 
+        //Inserarea datelor in tabelul ELEMENTE_MENIURI
+        stmt = connection.prepareStatement("INSERT INTO ELEMENTE_MENIURI (id_meniu, id_preparat) VALUES (3, 37), (3,38), (3,39), (4,38), (4,37), (4,40), (4,41), (5,38), (5,43), (5,40), (5,44), (5,42), (6,38), (6,45), (6,39), (6,41);");
+        stmt.executeUpdate();
 
         stmt.close();
     }

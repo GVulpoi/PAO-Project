@@ -1,26 +1,16 @@
 import Implement.*;
 import Database.Database;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, SQLException {
         Database database = Database.getInstance();
-        database.initialization();
+        //database.initialization();
 
         Users users = new Users();
-
-        Preparat pr1 = new Preparat(new String[]{"cartofi", "ardei", "suc de rosii"}, "Tocana de Ardei", 130);
-        Preparat pr2 = new Preparat(new String[]{"carne de pui", "ceapa", "usturoi", "apa"}, "Supa de pui", 200);
-        Preparat pr3 = new Preparat(new String[]{"orez", "fasole", "ardei", "rosii"}, "Chili con carne", 300);
-        Preparat pr4 = new Preparat(new String[]{"cartofi", "branza", "salam", "smantana"}, "Cartofi gratinati", 250);
-        Preparat pr5 = new Preparat(new String[]{"oua", "ceapa", "rosii", "ardei"}, "Omleta", 180);
-        Preparat pr6 = new Preparat(new String[]{"paste", "sos de rosii", "branza", "busuioc"}, "Paste cu sos de rosii", 350);
-        Preparat pr7 = new Preparat(new String[]{"ton", "salata verde", "rosii", "masline"}, "Salata Nicoise", 180);
-        Preparat pr8 = new Preparat(new String[]{"piept de pui", "sos teriyaki", "orez", "broccoli"}, "Pui teriyaki cu orez", 280);
-        Preparat pr9 = new Preparat(new String[]{"dovlecei", "vinete", "ardei", "ceapa"}, "Ratatouille", 220);
-        Preparat pr10 = new Preparat(new String[]{"carne tocata", "orez", "morcov", "mazare"}, "Pilaf", 320);
 
         List<Localizare> localizari = new ArrayList<>();
         localizari.add(new Localizare("Bucuresti", "Herastrau park", 28));
@@ -29,10 +19,10 @@ public class Main {
         localizari.add(new Localizare("Bucuresti", "Calea floreasca", 111));
 
         List<RestaurantCuRating> restauranteCuRating = new ArrayList<>();
-        RestaurantCuRating tavRac = new RestaurantCuRating(5, new Restaurant("Taverna Racilor", new Localizare("Bucuresti", "Herastrau park", 28), new Meniu(new HashSet<>(Arrays.asList(pr1, pr2, pr3)))));
-        RestaurantCuRating story = new RestaurantCuRating(4.3, new Restaurant("Story Wine and Music", new Localizare("Targoviste", "Centrul vechi", 17), new Meniu(new HashSet<>(Arrays.asList(pr3, pr2, pr5, pr6)))));
-        RestaurantCuRating vacamuuu = new RestaurantCuRating(4.9, new Restaurant("Vacamuuu", new Localizare("Bucuresti", "Calea floreasca", 111), new Meniu(new HashSet<>(Arrays.asList(pr3, pr8, pr5, pr9, pr7)))));
-        RestaurantCuRating pescLuiMatei = new RestaurantCuRating(3.9, new Restaurant("Pescaria Lui Matei", new Localizare("Constanta", "Strada meduzei", 13), new Meniu(new HashSet<>(Arrays.asList(pr3, pr10, pr4, pr6)))));
+        RestaurantCuRating tavRac = new RestaurantCuRating(5, new Restaurant("Taverna Racilor", new Localizare("Bucuresti", "Herastrau park", 28), new Meniu("meniu1")));
+        RestaurantCuRating story = new RestaurantCuRating(4.3, new Restaurant("Story Wine and Music", new Localizare("Targoviste", "Centrul vechi", 17), new Meniu("meniu2")));
+        RestaurantCuRating vacamuuu = new RestaurantCuRating(4.9, new Restaurant("Vacamuuu", new Localizare("Bucuresti", "Calea floreasca", 111), new Meniu("meniu3")));
+        RestaurantCuRating pescLuiMatei = new RestaurantCuRating(3.9, new Restaurant("Pescaria Lui Matei", new Localizare("Constanta", "Strada meduzei", 13), new Meniu("meniu4")));
 
         restauranteCuRating.add(tavRac);
 
