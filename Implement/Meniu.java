@@ -32,9 +32,38 @@ public class Meniu implements MeniuService {
 
     }
 
-
-    public void addPreparat(Preparat preparat) {
+    public void addPreparat(Preparat preparat) throws SQLException {
         preparate.add(preparat);
+
+        Database database = Database.getInstance();
+        ResultSet rsIdMeniu = database.execQuery("SELECT id_meniu FROM MENIURI WHERE nume = '" + nume.toLowerCase() + "');");
+        ResultSet rsIdPreparat = database.execQuery("SELECT id_preparat FROM PREPARATE WHERE nume ='" + preparat.getNume().toLowerCase() + "');");
+
+        if(rsIdPreparat.next()) {
+            database.execUpdate("INSERT INTO TABLE ELEMENTE_MENIURI VALUES (id_meniu) VALUES (" + rsIdMeniu.getString("rsIdMeniu") + ", " + rsIdPreparat.getString("id_preparat") + ");");
+        }
+        else {
+            database.execUpdate("INSERT INTO TABLE PREPARATE (nume) VALUES ('" + preparat.getNume().toLowerCase() + "');");
+            ResultSet rsIdPreparat1 = database.execQuery("SELECT id_preparat FROM PREPARATE WHERE nume ='" + preparat.getNume().toLowerCase() + "');");
+            rsIdPreparat1.next();
+
+            for(String ingredient : preparat.getIngrediente()) {
+                database.execUpdate("INSERT INTO TABLE ELEMENTE_PREPARATE (id_preparat, id_ingredient) VALUES (" + rsIdPreparat1.getString("id_preparat") + ", " + rsIdMeniu.getString("id_meniu")+ ");");
+            }
+        }
+    }
+
+    public void deletePreparat(Preparat preparat) throws SQLException {
+        Database database = Database.getInstance();
+        ResultSet rsIdPreparat = database.execQuery("SELECT id_preparat FROM PREPARATE WHERE nume ='" + preparat.getNume().toLowerCase() + "');");
+
+        if(rsIdPreparat.next()) {
+            ResultSet ingredientePreparat = database.execQuery("SELECT id_element_preparat FROM ELEMENTE_PREPARATE WHERE id_preparat = " + rsIdPreparat.getInt("id_preparat") + " ;" );
+            database.execUpdate("DELETE FROM PREPARATE WHERE id_preparat = " + rsIdPreparat.getInt("id_preparat") + " ;");
+            while (ingredientePreparat.next()) {
+                database.execUpdate("DELETE FROM ELEMENTE_PREPARATE WHERE id_element_preparat = " + ingredientePreparat.getInt("id_element_preparat" + " ;"));
+            }
+        }
     }
 
     public Set<Preparat> getPreparate() {
@@ -53,15 +82,12 @@ public class Meniu implements MeniuService {
         return null;
     }
 
-    public void showMeniu() {
+    public void showMeniu() throws SQLException {
         int k = 1;
         for (Preparat preparat : preparate) {
-            System.out.print(k + ") ");
-            System.out.print(") Nume : ");
-            System.out.println(preparat.getNume());
-            System.out.println("Ingrediente : ");
-            preparat.showIngrediente();
-            k += 1;
+            System.out.print( k + ") Nume : ");
+            preparat.showPreparat();
+            k++;
         }
     }
 }

@@ -107,8 +107,7 @@ public class Main {
     public static void part2A(Users users, Restaurante restaurante, List<Localizare> localizari, List<RestaurantCuRating> restauranteCuRating) throws InterruptedException, SQLException {
         System.out.println("1. Afisare users");
         System.out.println("2. Sterge users");
-        System.out.println("3. Modifica restaurant");
-        System.out.println("4. Modifica user");
+        System.out.println("3. Modifica user");
         System.out.println("e. Exit");
 
         Scanner scanner = new Scanner(System.in);
@@ -122,7 +121,7 @@ public class Main {
                 part2A2(users, restaurante, localizari, restauranteCuRating);
             }
             else {
-                if(option.equals("4")) {
+                if(option.equals("3")) {
                     part2A4(users, restaurante, localizari, restauranteCuRating);
                 }
                     if (option.equals("e")) {
@@ -353,7 +352,7 @@ public class Main {
         }
     }
 
-    public static void part31(Users users, Restaurante restaurante, Restaurant restaurant, ComandaImpl comanda, List<RestaurantCuRating> restauranteCuRating) throws InterruptedException {
+    public static void part31(Users users, Restaurante restaurante, Restaurant restaurant, ComandaImpl comanda, List<RestaurantCuRating> restauranteCuRating) throws InterruptedException, SQLException {
         boolean ok = true;
 
         while (ok) {
